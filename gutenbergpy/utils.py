@@ -95,9 +95,10 @@ class Utils:
         tar = tarfile.open(GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME)
         total_num = len(tar.getmembers())
         type = "Extracting  %s" % GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME
+        base_path = GutenbergCacheSettings.CACHE_RDF_UNPACK_DIRECTORY
         for idx, member in enumerate(tar.getmembers()):
             Utils.update_progress_bar(type, idx, total_num)
-            tar.extract(member)
+            tar.extract(member, path=base_path)
         tar.close()
 
         print("took %f" % (time.time() - start))

@@ -8,10 +8,12 @@ logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
 
 logging.getLogger().info("At least in here")
-directory = Path("temp/epub")
+directory = Path("temp")
 directory.mkdir(parents=True, exist_ok=True)
 GutenbergCacheSettings.set(
-    CacheUnpackDir="temp/epub", CacheFilename="temp/gutenberg.db"
+    CacheUnpackDir="temp/unpack",  # This needs to be a separate directory, not totally sure why.
+    CacheFilename="temp/gutenberg.db",
+    CacheArchiveName="temp/rdf-files.tar.bz2",
 )
 GutenbergCacheSettings.log()
 
