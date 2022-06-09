@@ -14,3 +14,4 @@ cache/
 rdf-files.tar.bz2
 memory.pickle
 memusage.txt
+temp/

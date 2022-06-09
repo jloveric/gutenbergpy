@@ -7,6 +7,9 @@ from gutenbergpy.gutenbergcachesettings import GutenbergCacheSettings
 from gutenbergpy.parse.rdfparser import RdfParser
 from gutenbergpy.caches.sqlitecache import SQLiteCache
 from gutenbergpy.caches.mongodbcache import MongodbCache
+import logging
+
+logger = logging.getLogger(__name__)
 
 ##
 # Cache types
@@ -33,18 +36,15 @@ class GutenbergCache:
     ##
     # Create the cache
     @staticmethod
-    def create(**kwargs):
-        cache_type = (
-            GutenbergCacheTypes.CACHE_TYPE_SQLITE
-            if "type" not in kwargs
-            else kwargs["type"]
-        )
-        refresh = True if "refresh" not in kwargs else kwargs["refresh"]
-        download = True if "download" not in kwargs else kwargs["download"]
-        unpack = True if "unpack" not in kwargs else kwargs["unpack"]
-        parse = True if "parse" not in kwargs else kwargs["parse"]
-        cache = True if "cache" not in kwargs else kwargs["cache"]
-        deleteTmp = True if "deleteTemp" not in kwargs else kwargs["deleteTemp"]
+    def create(
+        cache_type=GutenbergCacheTypes.CACHE_TYPE_SQLITE,
+        refresh: bool = True,
+        download: bool = True,
+        unpack: bool = True,
+        parse: bool = True,
+        cache: bool = True,
+        deleteTemp: bool = True,
+    ):
 
         if (
             path.isfile(GutenbergCacheSettings.CACHE_FILENAME)
@@ -76,7 +76,7 @@ class GutenbergCache:
                 cache.create_cache(result)
                 print("sql took %f" % (time.time() - t0))
 
-        if deleteTmp:
+        if deleteTemp:
             print("Deleting temporary files")
             Utils.delete_tmp_files()
 

@@ -1,6 +1,14 @@
 from __future__ import print_function
 import gutenbergpy.textget
 from gutenbergpy.gutenbergcache import GutenbergCache
+from gutenbergpy.gutenbergcachesettings import GutenbergCacheSettings
+from pathlib import Path
+
+directory = Path("temp/epub")
+directory.mkdir(parents=True, exist_ok=True)
+GutenbergCacheSettings.set(
+    CacheUnpackDir="temp/epub", CacheFilename="temp/gutenberg.db"
+)
 
 # create cache from scratchfrom scratch
 GutenbergCache.create(
