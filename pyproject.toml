@@ -6,7 +6,7 @@ authors = ["Radu Angelescu <raduangelescu@gmail.com>"]
 license = "LICENSE.txt"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9"
 future = "^0.18.2"
 httpsproxy_urllib2 = "^1.0"
 lxml = "^4.9.0"
