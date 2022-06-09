@@ -1,7 +1,6 @@
+========
 GutenbergPy, this version works with Hydra.  Hydra changes the working directory and causes problems as a result you need to use
 full paths and modify the tarball extractor step.  This version also uses poetry.
-========
-Minor mods to the original to use Poetry
 
 ![image](https://github.com/raduangelescu/gutenbergpy/blob/master/dblogos.png?raw=true)
 
