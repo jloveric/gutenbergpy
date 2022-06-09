@@ -1,6 +1,6 @@
 # THIS CODE IS ADAPTED FROM https://github.com/LuminosoInsight/ordered-set
 SLICE_ALL = slice(None)
-__version__ = '2.0.1'
+__version__ = "2.0.1"
 
 import collections
 
@@ -18,7 +18,11 @@ def is_iterable(obj):
     We don't need to check for the Python 2 `unicode` type, because it doesn't
     have an `__iter__` attribute anyway.
     """
-    return hasattr(obj, '__iter__') and not isinstance(obj, str) and not isinstance(obj, tuple)
+    return (
+        hasattr(obj, "__iter__")
+        and not isinstance(obj, str)
+        and not isinstance(obj, tuple)
+    )
 
 
 class OrderedSet(collections.MutableSet):
@@ -50,7 +54,7 @@ class OrderedSet(collections.MutableSet):
         """
         if index == SLICE_ALL:
             return self
-        elif hasattr(index, '__index__') or isinstance(index, slice):
+        elif hasattr(index, "__index__") or isinstance(index, slice):
             result = self.items[index]
             if isinstance(result, list):
                 return OrderedSet(result)
@@ -59,8 +63,7 @@ class OrderedSet(collections.MutableSet):
         elif is_iterable(index):
             return OrderedSet([self.items[i] for i in index])
         else:
-            raise TypeError("Don't know how to index an OrderedSet by %r" %
-                            index)
+            raise TypeError("Don't know how to index an OrderedSet by %r" % index)
 
     def copy(self):
         return OrderedSet(self)
@@ -73,7 +76,7 @@ class OrderedSet(collections.MutableSet):
             # This could have been done more gracefully by always putting the state
             # in a tuple, but this way is backwards- and forwards- compatible with
             # previous versions of OrderedSet.
-            return None,
+            return (None,)
         else:
             return list(self)
 
@@ -110,7 +113,9 @@ class OrderedSet(collections.MutableSet):
             for item in sequence:
                 item_index = self.add(item)
         except TypeError:
-            raise ValueError('Argument needs to be an iterable, got %s' % type(sequence))
+            raise ValueError(
+                "Argument needs to be an iterable, got %s" % type(sequence)
+            )
         return item_index
 
     def index(self, key):
@@ -136,7 +141,7 @@ class OrderedSet(collections.MutableSet):
         Raises KeyError if the set is empty.
         """
         if not self.items:
-            raise KeyError('Set is empty')
+            raise KeyError("Set is empty")
 
         elem = self.items[-1]
         del self.items[-1]
@@ -173,8 +178,8 @@ class OrderedSet(collections.MutableSet):
 
     def __repr__(self):
         if not self:
-            return '%s()' % (self.__class__.__name__,)
-        return '%s(%r)' % (self.__class__.__name__, list(self))
+            return "%s()" % (self.__class__.__name__,)
+        return "%s(%r)" % (self.__class__.__name__, list(self))
 
     def __eq__(self, other):
         if isinstance(other, OrderedSet):

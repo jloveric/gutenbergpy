@@ -4,6 +4,7 @@ import os
 import urllib
 import tarfile
 from future.standard_library import install_aliases
+
 install_aliases()
 import urllib.request
 from gutenbergpy.gutenbergcachesettings import GutenbergCacheSettings
@@ -28,7 +29,9 @@ class Utils:
         except OSError:
             pass
         try:
-            for root, dirs, files in os.walk(GutenbergCacheSettings.CACHE_RDF_UNPACK_DIRECTORY, topdown=False):
+            for root, dirs, files in os.walk(
+                GutenbergCacheSettings.CACHE_RDF_UNPACK_DIRECTORY, topdown=False
+            ):
                 for name in files:
                     os.remove(os.path.join(root, name))
                 for name in dirs:
@@ -40,14 +43,21 @@ class Utils:
     # Updates the visual progress bar
 
     @staticmethod
-    def update_progress_bar(type, progress, total_progress,
-                            force_update=True):  # used to update the progress bar display
-        if total_progress % GutenbergCacheSettings.DOWNLOAD_NUM_DIVS == 0 or force_update == True or progress == 0:
+    def update_progress_bar(
+        type, progress, total_progress, force_update=True
+    ):  # used to update the progress bar display
+        if (
+            total_progress % GutenbergCacheSettings.DOWNLOAD_NUM_DIVS == 0
+            or force_update == True
+            or progress == 0
+        ):
             dv = total_progress / GutenbergCacheSettings.DOWNLOAD_NUM_DIVS
             num_of_sharp = int(progress / dv)
             num_of_space = int((total_progress - progress) / dv)
 
-            sys.stdout.write("\r %s : [%s%s]" % (type, '#' * num_of_sharp, ' ' * num_of_space))
+            sys.stdout.write(
+                "\r %s : [%s%s]" % (type, "#" * num_of_sharp, " " * num_of_space)
+            )
             sys.stdout.flush()
 
     download_progress = 0
@@ -56,9 +66,9 @@ class Utils:
     # Callback to report downloaded data
 
     @staticmethod
-    def __report(block_no,block_size, file_size):  # callback called on download update
+    def __report(block_no, block_size, file_size):  # callback called on download update
         Utils.download_progress += block_size
-        type = 'Downloading %s' % GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME
+        type = "Downloading %s" % GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME
         Utils.update_progress_bar(type, Utils.download_progress, file_size, True)
 
     ##
@@ -67,10 +77,13 @@ class Utils:
     @staticmethod
     def download_file():  # used to download the rdf tar file
         start = time.time()
-        urllib.request.urlretrieve(GutenbergCacheSettings.CACHE_RDF_DOWNLOAD_LINK,
-                                   GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME, Utils.__report)
+        urllib.request.urlretrieve(
+            GutenbergCacheSettings.CACHE_RDF_DOWNLOAD_LINK,
+            GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME,
+            Utils.__report,
+        )
 
-        print ('took %f' % (time.time() - start))
+        print("took %f" % (time.time() - start))
         Utils.download_progress = 0
 
     ##
@@ -81,10 +94,10 @@ class Utils:
         start = time.time()
         tar = tarfile.open(GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME)
         total_num = len(tar.getmembers())
-        type = 'Extracting  %s' % GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME
+        type = "Extracting  %s" % GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME
         for idx, member in enumerate(tar.getmembers()):
             Utils.update_progress_bar(type, idx, total_num)
             tar.extract(member)
         tar.close()
 
-        print('took %f' % (time.time() - start))
+        print("took %f" % (time.time() - start))
