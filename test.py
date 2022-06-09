@@ -13,6 +13,7 @@ directory.mkdir(parents=True, exist_ok=True)
 GutenbergCacheSettings.set(
     CacheUnpackDir="temp/epub", CacheFilename="temp/gutenberg.db"
 )
+GutenbergCacheSettings.log()
 
 # create cache from scratchfrom scratch
 GutenbergCache.create(
