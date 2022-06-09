@@ -34,13 +34,15 @@ class SQLiteCache(Cache):
 
         this_dir, this_filename = os.path.split(__file__)
 
-        logger.info(f"creating {this_dir}/{SQLiteCache.DB_CREATE_CACHE_FILENAME}")
+        logger.info(
+            f"Setting DB_CREATE_CACHE_FILENAME {this_dir}/{SQLiteCache.DB_CREATE_CACHE_FILENAME}"
+        )
         SQLiteCache.DB_CREATE_CACHE_FILENAME = os.path.join(
             this_dir, SQLiteCache.DB_CREATE_CACHE_FILENAME
         )
 
         logger.info(
-            f"creating {this_dir}/{SQLiteCache.DB_CREATE_CACHE_INDICES_FILENAME}"
+            f"Setting DB_CREATE_CACHE_INDICES_FILENAME {this_dir}/{SQLiteCache.DB_CREATE_CACHE_INDICES_FILENAME}"
         )
         SQLiteCache.DB_CREATE_CACHE_INDICES_FILENAME = os.path.join(
             this_dir, SQLiteCache.DB_CREATE_CACHE_INDICES_FILENAME

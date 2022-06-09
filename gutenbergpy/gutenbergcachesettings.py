@@ -58,3 +58,10 @@ class GutenbergCacheSettings:
             GutenbergCacheSettings.MONGO_DB_CONNECTION_SERVER = kwargs[
                 "MongoDBCacheServer"
             ]
+
+        logger.info(
+            f"CACHE_FILENAME {GutenbergCacheSettings.CACHE_FILENAME}, CACHE_RDF_UNPACK_DIRECTORY {GutenbergCacheSettings.CACHE_RDF_UNPACK_DIRECTORY}, CACHE_RDF_ARCHIVE_NAME {GutenbergCacheSettings.CACHE_RDF_ARCHIVE_NAME}"
+        )
+        logger.info(
+            f"CACHE_RDF_DOWNLOAD_LINK {GutenbergCacheSettings.CACHE_RDF_DOWNLOAD_LINK}, TEXT_FILES_CACHE_FOLDER {GutenbergCacheSettings.TEXT_FILES_CACHE_FOLDER}, MONGO_DB_CONNECTION_SERVER {GutenbergCacheSettings.MONGO_DB_CONNECTION_SERVER}"
+        )
