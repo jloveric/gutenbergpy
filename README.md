@@ -1,5 +1,6 @@
 GutenbergPy
 ========
+Minor mods to the original to use Poetry
 
 ![image](https://github.com/raduangelescu/gutenbergpy/blob/master/dblogos.png?raw=true)
 
