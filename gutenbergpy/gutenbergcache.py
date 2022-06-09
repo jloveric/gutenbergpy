@@ -10,6 +10,7 @@ from gutenbergpy.caches.mongodbcache import MongodbCache
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 ##
 # Cache types
@@ -30,7 +31,7 @@ class GutenbergCache:
             return SQLiteCache()
         elif type == GutenbergCacheTypes.CACHE_TYPE_MONGODB:
             return MongodbCache()
-        print("CACHE TYPE UNKNOWN")
+        logger.info("CACHE TYPE UNKNOWN")
         return None
 
     ##
@@ -45,17 +46,17 @@ class GutenbergCache:
         cache: bool = True,
         deleteTemp: bool = True,
     ):
-
+        logger.info(f"Using cache parameters {GutenbergCacheSettings}")
         if (
             path.isfile(GutenbergCacheSettings.CACHE_FILENAME)
             and refresh
             and cache_type == GutenbergCacheTypes.CACHE_TYPE_SQLITE
         ):
-            print("Cache already exists")
+            logger.info("Cache already exists")
             return
 
         if refresh:
-            print("Deleting old files")
+            logger.info("Deleting old files")
             Utils.delete_tmp_files(True)
 
         if download:
@@ -68,19 +69,19 @@ class GutenbergCache:
             t0 = time.time()
             parser = RdfParser()
             result = parser.do()
-            print("RDF PARSING took " + str(time.time() - t0))
+            logger.info("RDF PARSING took " + str(time.time() - t0))
 
             if cache:
                 t0 = time.time()
                 cache = GutenbergCache.get_cache(cache_type)
                 cache.create_cache(result)
-                print("sql took %f" % (time.time() - t0))
+                logger.info("sql took %f" % (time.time() - t0))
 
         if deleteTemp:
-            print("Deleting temporary files")
+            logger.info("Deleting temporary files")
             Utils.delete_tmp_files()
 
-        print("Done")
+        logger.info("Done")
 
     ##
     # Method to check if the cache exists

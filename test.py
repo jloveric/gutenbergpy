@@ -1,9 +1,13 @@
-from __future__ import print_function
 import gutenbergpy.textget
 from gutenbergpy.gutenbergcache import GutenbergCache
 from gutenbergpy.gutenbergcachesettings import GutenbergCacheSettings
 from pathlib import Path
+import logging
 
+logging.basicConfig()
+logging.getLogger().setLevel(logging.DEBUG)
+
+logging.getLogger().info("At least in here")
 directory = Path("temp/epub")
 directory.mkdir(parents=True, exist_ok=True)
 GutenbergCacheSettings.set(
@@ -23,4 +27,4 @@ print(
     )
 )
 # Print stripped text
-print(gutenbergpy.textget.strip_headers(gutenbergpy.textget.get_text_by_id(1000)))
+print(gutenbergpy.textget.strip_headers(gutenbergpy.textget.get_text_by_id(1000))[:100])
